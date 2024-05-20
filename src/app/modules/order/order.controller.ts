@@ -21,13 +21,16 @@ const createOrder = async (req: Request, res: Response) => {
     res.status(status.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: error.message,
+      error: error,
     })
   }
 }
 
 const getAllOrders = async (req: Request, res: Response) => {
   try {
-    const result = await OrderServices.getAllOrdersFromDB()
+    const { email } = req.query
+
+    const result = await OrderServices.getAllOrdersFromDB(email)
 
     res.status(status.OK).json({
       totalResult: result.length,
@@ -39,6 +42,7 @@ const getAllOrders = async (req: Request, res: Response) => {
     res.status(status.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: error.message,
+      error: error,
     })
   }
 }
