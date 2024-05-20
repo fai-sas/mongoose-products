@@ -60,6 +60,24 @@ const getSingleProduct = async (req: Request, res: Response) => {
   }
 }
 
+const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params
+    const result = await ProductServices.updateProductFromDB(productId)
+
+    res.status(status.OK).json({
+      success: true,
+      message: `Product with id: ${productId} updated successfully!`,
+      data: result,
+    })
+  } catch (error: any) {
+    res.status(status.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message,
+    })
+  }
+}
+
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params
@@ -82,5 +100,6 @@ export const ProductControllers = {
   createProduct,
   getAllProducts,
   getSingleProduct,
+  updateProduct,
   deleteProduct,
 }
