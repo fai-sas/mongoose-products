@@ -13,7 +13,7 @@ const createProduct = async (req: Request, res: Response) => {
 
     res.status(status.OK).json({
       success: true,
-      message: 'product is created successfully',
+      message: 'Product created successfully!',
       data: result,
     })
   } catch (error: any) {
@@ -31,7 +31,25 @@ const getAllProducts = async (req: Request, res: Response) => {
     res.status(status.OK).json({
       totalResult: result.length,
       success: true,
-      message: 'products retrieved successfully',
+      message: 'Products fetched successfully!',
+      data: result,
+    })
+  } catch (error: any) {
+    res.status(status.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message,
+    })
+  }
+}
+
+const getSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params
+    const result = await ProductServices.getSingleProductFromDB(productId)
+
+    res.status(status.OK).json({
+      success: true,
+      message: `Product with id: ${productId} fetched successfully!`,
       data: result,
     })
   } catch (error: any) {
@@ -45,4 +63,5 @@ const getAllProducts = async (req: Request, res: Response) => {
 export const ProductControllers = {
   createProduct,
   getAllProducts,
+  getSingleProduct,
 }
