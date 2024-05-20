@@ -6,7 +6,6 @@ const orderSchema = new Schema<TOrder>(
     email: {
       type: String,
       required: [true, 'Email is required'],
-      unique: true,
       trim: true,
       lowercase: true,
       match: [/.+@.+\..+/, 'Please fill a valid email address'],

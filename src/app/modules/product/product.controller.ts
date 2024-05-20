@@ -63,7 +63,14 @@ const getSingleProduct = async (req: Request, res: Response) => {
 const updateProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params
-    const result = await ProductServices.updateProductFromDB(productId)
+    const updatedProduct = req.body
+
+    const result = await ProductServices.updateProductFromDB(
+      productId,
+      updatedProduct
+    )
+
+    console.log({ result: result })
 
     res.status(status.OK).json({
       success: true,
