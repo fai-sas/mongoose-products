@@ -16,12 +16,14 @@ const getSingleProductFromDB = async (_id: string) => {
   return result
 }
 
-const updateProductFromDB = async (_id: string, updatedProduct: any) => {
-  const result = await Product.findByIdAndUpdate(_id, updatedProduct, {
+export const updateProductFromDB = async (
+  _id: string,
+  updatedProduct: object
+) => {
+  const result = await Product.findOneAndUpdate({ _id }, updatedProduct, {
     new: true,
     runValidators: true,
   })
-
   return result
 }
 
