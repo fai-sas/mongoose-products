@@ -113,6 +113,18 @@ const updateProduct = async (req: Request, res: Response) => {
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params
+
+    const productExists = await ProductServices.getSingleProductFromDB(
+      productId
+    )
+
+    if (!productExists) {
+      return res.status(status.NOT_FOUND).json({
+        success: false,
+        message: `Product with id: ${productId} not found!`,
+      })
+    }
+
     const result = await ProductServices.deleteProductFromDB(productId)
 
     if (!result) {
