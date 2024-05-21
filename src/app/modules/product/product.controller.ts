@@ -29,10 +29,21 @@ const getAllProducts = async (req: Request, res: Response) => {
     const { searchTerm } = req.query
     const result = await ProductServices.getAllProductsFromDB(searchTerm)
 
+    let message
+    if (searchTerm) {
+      if (result.length > 0) {
+        message = `Products matching search term '${searchTerm}' fetched successfully!`
+      } else {
+        message = `No products found matching search term '${searchTerm}'.`
+      }
+    } else {
+      message = 'Products fetched successfully!'
+    }
+
     res.status(status.OK).json({
       totalResult: result.length,
       success: true,
-      message: 'Products fetched successfully!',
+      message: message,
       data: result,
     })
   } catch (error: any) {
@@ -103,6 +114,13 @@ const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params
     const result = await ProductServices.deleteProductFromDB(productId)
+
+    if (!result) {
+      return res.status(status.NOT_FOUND).json({
+        success: false,
+        message: `Product with id: ${productId} not found!`,
+      })
+    }
 
     res.status(status.OK).json({
       success: true,

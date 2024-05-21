@@ -32,10 +32,23 @@ const getAllOrders = async (req: Request, res: Response) => {
 
     const result = await OrderServices.getAllOrdersFromDB(email)
 
+    let message
+
+    if (email) {
+      if (result.length > 0) {
+        message =
+          message = `Orders fetched successfully for user email '${email}'`
+      } else {
+        message = `No orders found for user email '${email}'`
+      }
+    } else {
+      message = 'Orders fetched successfully!'
+    }
+
     res.status(status.OK).json({
       totalResult: result.length,
       success: true,
-      message: 'Orders fetched successfully!',
+      message: message,
       data: result,
     })
   } catch (error: any) {
