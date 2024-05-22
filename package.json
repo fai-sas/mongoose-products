@@ -7,7 +7,6 @@
     "start:dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "vercel-build": "npm run build",
     "lint": "npx eslint .",
     "lint:fix": "npx eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
