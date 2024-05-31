@@ -5,9 +5,9 @@ import status from 'http-status'
 
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const { product: productData } = req.body
+    const product = req.body
 
-    const zodParsedData = productValidationSchema.parse(productData)
+    const zodParsedData = productValidationSchema.parse(product)
 
     const result = await ProductServices.createProductIntoDB(zodParsedData)
 
@@ -82,7 +82,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
 const updateProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params
-    const { product: updatedProduct } = req.body
+    const updatedProduct = req.body
 
     const result = await ProductServices.updateProductFromDB(
       productId,

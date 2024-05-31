@@ -62,4 +62,15 @@ const productSchema = new Schema<TProduct>(
   }
 )
 
+productSchema.pre('save', async function (next) {
+  const isProductExists = await Product.findOne({
+    name: this.name,
+  })
+
+  if (isProductExists) {
+    throw new Error(`Product with name ${this.name} already exists!`)
+  }
+  next()
+})
+
 export const Product = model<TProduct>('Product', productSchema)
